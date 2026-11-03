@@ -1,0 +1,4 @@
+interface:
+  display_name: "Battery Origin Plotting"
+  short_description: "Editable Origin plots from battery Excel data"
+  default_prompt: "Use $battery-origin-plotting to validate my Excel data and create editable native Origin figures."

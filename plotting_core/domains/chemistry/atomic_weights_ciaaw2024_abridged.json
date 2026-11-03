@@ -1,0 +1,598 @@
+{
+  "table_id": "CIAAW-abridged-standard-atomic-weights-2024",
+  "version": "2024",
+  "source": "https://www.ciaaw.org/abridged-atomic-weights.htm",
+  "retrieved_date": "2026-10-08",
+  "interpretation": "Abridged standard atomic weights of normal materials; numerical values used as conventional molar masses in g/mol, not isotope-specific exact masses",
+  "omitted_elements": "Elements marked with a dash in the official table have no standard atomic weight here; no representative isotope mass is substituted",
+  "elements": {
+    "H": {
+      "atomic_weight": 1.008,
+      "uncertainty": 0.0002,
+      "published_atomic_weight": "1.0080",
+      "published_uncertainty": "0.0002",
+      "notes": "m"
+    },
+    "He": {
+      "atomic_weight": 4.0026,
+      "uncertainty": 0.0001,
+      "published_atomic_weight": "4.0026",
+      "published_uncertainty": "0.0001",
+      "notes": "gr"
+    },
+    "Li": {
+      "atomic_weight": 6.94,
+      "uncertainty": 0.06,
+      "published_atomic_weight": "6.94",
+      "published_uncertainty": "0.06",
+      "notes": "m"
+    },
+    "Be": {
+      "atomic_weight": 9.0122,
+      "uncertainty": 0.0001,
+      "published_atomic_weight": "9.0122",
+      "published_uncertainty": "0.0001",
+      "notes": ""
+    },
+    "B": {
+      "atomic_weight": 10.81,
+      "uncertainty": 0.02,
+      "published_atomic_weight": "10.81",
+      "published_uncertainty": "0.02",
+      "notes": "m"
+    },
+    "C": {
+      "atomic_weight": 12.011,
+      "uncertainty": 0.002,
+      "published_atomic_weight": "12.011",
+      "published_uncertainty": "0.002",
+      "notes": ""
+    },
+    "N": {
+      "atomic_weight": 14.007,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "14.007",
+      "published_uncertainty": "0.001",
+      "notes": "m"
+    },
+    "O": {
+      "atomic_weight": 15.999,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "15.999",
+      "published_uncertainty": "0.001",
+      "notes": "m"
+    },
+    "F": {
+      "atomic_weight": 18.998,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "18.998",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Ne": {
+      "atomic_weight": 20.18,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "20.180",
+      "published_uncertainty": "0.001",
+      "notes": "gm"
+    },
+    "Na": {
+      "atomic_weight": 22.99,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "22.990",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Mg": {
+      "atomic_weight": 24.305,
+      "uncertainty": 0.002,
+      "published_atomic_weight": "24.305",
+      "published_uncertainty": "0.002",
+      "notes": ""
+    },
+    "Al": {
+      "atomic_weight": 26.982,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "26.982",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Si": {
+      "atomic_weight": 28.085,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "28.085",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "P": {
+      "atomic_weight": 30.974,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "30.974",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "S": {
+      "atomic_weight": 32.06,
+      "uncertainty": 0.02,
+      "published_atomic_weight": "32.06",
+      "published_uncertainty": "0.02",
+      "notes": ""
+    },
+    "Cl": {
+      "atomic_weight": 35.45,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "35.45",
+      "published_uncertainty": "0.01",
+      "notes": "m"
+    },
+    "Ar": {
+      "atomic_weight": 39.95,
+      "uncertainty": 0.16,
+      "published_atomic_weight": "39.95",
+      "published_uncertainty": "0.16",
+      "notes": ""
+    },
+    "K": {
+      "atomic_weight": 39.098,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "39.098",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Ca": {
+      "atomic_weight": 40.078,
+      "uncertainty": 0.004,
+      "published_atomic_weight": "40.078",
+      "published_uncertainty": "0.004",
+      "notes": "g"
+    },
+    "Sc": {
+      "atomic_weight": 44.956,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "44.956",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Ti": {
+      "atomic_weight": 47.867,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "47.867",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "V": {
+      "atomic_weight": 50.942,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "50.942",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Cr": {
+      "atomic_weight": 51.996,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "51.996",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Mn": {
+      "atomic_weight": 54.938,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "54.938",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Fe": {
+      "atomic_weight": 55.845,
+      "uncertainty": 0.002,
+      "published_atomic_weight": "55.845",
+      "published_uncertainty": "0.002",
+      "notes": ""
+    },
+    "Co": {
+      "atomic_weight": 58.933,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "58.933",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Ni": {
+      "atomic_weight": 58.693,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "58.693",
+      "published_uncertainty": "0.001",
+      "notes": "r"
+    },
+    "Cu": {
+      "atomic_weight": 63.546,
+      "uncertainty": 0.003,
+      "published_atomic_weight": "63.546",
+      "published_uncertainty": "0.003",
+      "notes": "r"
+    },
+    "Zn": {
+      "atomic_weight": 65.38,
+      "uncertainty": 0.02,
+      "published_atomic_weight": "65.38",
+      "published_uncertainty": "0.02",
+      "notes": "r"
+    },
+    "Ga": {
+      "atomic_weight": 69.723,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "69.723",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Ge": {
+      "atomic_weight": 72.63,
+      "uncertainty": 0.008,
+      "published_atomic_weight": "72.630",
+      "published_uncertainty": "0.008",
+      "notes": ""
+    },
+    "As": {
+      "atomic_weight": 74.922,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "74.922",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Se": {
+      "atomic_weight": 78.971,
+      "uncertainty": 0.008,
+      "published_atomic_weight": "78.971",
+      "published_uncertainty": "0.008",
+      "notes": "r"
+    },
+    "Br": {
+      "atomic_weight": 79.904,
+      "uncertainty": 0.003,
+      "published_atomic_weight": "79.904",
+      "published_uncertainty": "0.003",
+      "notes": ""
+    },
+    "Kr": {
+      "atomic_weight": 83.798,
+      "uncertainty": 0.002,
+      "published_atomic_weight": "83.798",
+      "published_uncertainty": "0.002",
+      "notes": "gm"
+    },
+    "Rb": {
+      "atomic_weight": 85.468,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "85.468",
+      "published_uncertainty": "0.001",
+      "notes": "g"
+    },
+    "Sr": {
+      "atomic_weight": 87.62,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "87.62",
+      "published_uncertainty": "0.01",
+      "notes": "gr"
+    },
+    "Y": {
+      "atomic_weight": 88.906,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "88.906",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Zr": {
+      "atomic_weight": 91.222,
+      "uncertainty": 0.003,
+      "published_atomic_weight": "91.222",
+      "published_uncertainty": "0.003",
+      "notes": "g"
+    },
+    "Nb": {
+      "atomic_weight": 92.906,
+      "uncertainty": 0.001,
+      "published_atomic_weight": "92.906",
+      "published_uncertainty": "0.001",
+      "notes": ""
+    },
+    "Mo": {
+      "atomic_weight": 95.95,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "95.95",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Ru": {
+      "atomic_weight": 101.07,
+      "uncertainty": 0.02,
+      "published_atomic_weight": "101.07",
+      "published_uncertainty": "0.02",
+      "notes": "g"
+    },
+    "Rh": {
+      "atomic_weight": 102.91,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "102.91",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Pd": {
+      "atomic_weight": 106.42,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "106.42",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Ag": {
+      "atomic_weight": 107.87,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "107.87",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Cd": {
+      "atomic_weight": 112.41,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "112.41",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "In": {
+      "atomic_weight": 114.82,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "114.82",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Sn": {
+      "atomic_weight": 118.71,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "118.71",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Sb": {
+      "atomic_weight": 121.76,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "121.76",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Te": {
+      "atomic_weight": 127.6,
+      "uncertainty": 0.03,
+      "published_atomic_weight": "127.60",
+      "published_uncertainty": "0.03",
+      "notes": "g"
+    },
+    "I": {
+      "atomic_weight": 126.9,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "126.90",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Xe": {
+      "atomic_weight": 131.29,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "131.29",
+      "published_uncertainty": "0.01",
+      "notes": "gm"
+    },
+    "Cs": {
+      "atomic_weight": 132.91,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "132.91",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Ba": {
+      "atomic_weight": 137.33,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "137.33",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "La": {
+      "atomic_weight": 138.91,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "138.91",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Ce": {
+      "atomic_weight": 140.12,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "140.12",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Pr": {
+      "atomic_weight": 140.91,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "140.91",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Nd": {
+      "atomic_weight": 144.24,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "144.24",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Sm": {
+      "atomic_weight": 150.36,
+      "uncertainty": 0.02,
+      "published_atomic_weight": "150.36",
+      "published_uncertainty": "0.02",
+      "notes": "g"
+    },
+    "Eu": {
+      "atomic_weight": 151.96,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "151.96",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Gd": {
+      "atomic_weight": 157.25,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "157.25",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Tb": {
+      "atomic_weight": 158.93,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "158.93",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Dy": {
+      "atomic_weight": 162.5,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "162.50",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Ho": {
+      "atomic_weight": 164.93,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "164.93",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Er": {
+      "atomic_weight": 167.26,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "167.26",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Tm": {
+      "atomic_weight": 168.93,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "168.93",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Yb": {
+      "atomic_weight": 173.05,
+      "uncertainty": 0.02,
+      "published_atomic_weight": "173.05",
+      "published_uncertainty": "0.02",
+      "notes": "g"
+    },
+    "Lu": {
+      "atomic_weight": 174.97,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "174.97",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Hf": {
+      "atomic_weight": 178.49,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "178.49",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Ta": {
+      "atomic_weight": 180.95,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "180.95",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "W": {
+      "atomic_weight": 183.84,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "183.84",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Re": {
+      "atomic_weight": 186.21,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "186.21",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Os": {
+      "atomic_weight": 190.23,
+      "uncertainty": 0.03,
+      "published_atomic_weight": "190.23",
+      "published_uncertainty": "0.03",
+      "notes": "g"
+    },
+    "Ir": {
+      "atomic_weight": 192.22,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "192.22",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Pt": {
+      "atomic_weight": 195.08,
+      "uncertainty": 0.02,
+      "published_atomic_weight": "195.08",
+      "published_uncertainty": "0.02",
+      "notes": ""
+    },
+    "Au": {
+      "atomic_weight": 196.97,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "196.97",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Hg": {
+      "atomic_weight": 200.59,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "200.59",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Tl": {
+      "atomic_weight": 204.38,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "204.38",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Pb": {
+      "atomic_weight": 207.2,
+      "uncertainty": 1.1,
+      "published_atomic_weight": "207.2",
+      "published_uncertainty": "1.1",
+      "notes": ""
+    },
+    "Bi": {
+      "atomic_weight": 208.98,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "208.98",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "Th": {
+      "atomic_weight": 232.04,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "232.04",
+      "published_uncertainty": "0.01",
+      "notes": "g"
+    },
+    "Pa": {
+      "atomic_weight": 231.04,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "231.04",
+      "published_uncertainty": "0.01",
+      "notes": ""
+    },
+    "U": {
+      "atomic_weight": 238.03,
+      "uncertainty": 0.01,
+      "published_atomic_weight": "238.03",
+      "published_uncertainty": "0.01",
+      "notes": "gm"
+    }
+  }
+}

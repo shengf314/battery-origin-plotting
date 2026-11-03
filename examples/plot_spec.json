@@ -1,0 +1,45 @@
+{
+  "spec_version": 1,
+  "task_name": "rate_input_synthetic_example",
+  "plot_type": "rate_capability",
+  "output_root": "C:/battery-origin-demo/outputs",
+  "data": {
+    "kind": "excel_cycle_summary",
+    "file": "C:/battery-origin-demo/rate_input_example.xlsx",
+    "sheet": "RateInput",
+    "field_map": {
+      "Sample": "Sample",
+      "Cycle": "Cycle",
+      "Rate": "Rate",
+      "Discharge Specific Capacity (mAh/g)": "Discharge Specific Capacity"
+    },
+    "notes": [
+      "Synthetic input example only; not experimental observations.",
+      "Each row is one sample/cycle; supplied discharge specific capacity unit is mAh/g."
+    ]
+  },
+  "samples": [
+    {
+      "name": "A_synthetic_example"
+    },
+    {
+      "name": "B_synthetic_example"
+    }
+  ],
+  "overrides": {
+    "plot_type": {
+      "rate_labels": {
+        "y_position": null,
+        "placement": "above"
+      }
+    }
+  },
+  "backend": {
+    "name": "origin"
+  },
+  "verification": {
+    "level": 3,
+    "reopen_project": true,
+    "editability_probe": true
+  }
+}

@@ -1,0 +1,24 @@
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+
+# Pipeline work files (only exist during a render; kept on failure for debugging)
+**/.tmp/
+
+# Scratch outputs; task deliverables live under <output_root>/<task_name>/
+.tmp/
+_probe*
+
+# Origin / editor leftovers
+*.tmp
+~$*
+
+# Local dependency environments and generated task outputs
+.venv/
+venv/
+node_modules/
+outputs/
+dist/
+.env
+.env.*
+!.env.example

@@ -1,0 +1,271 @@
+# null = 未配置；局部非 null override 优先于全局。
+# 所有 *_axis_range 保持 null。通常由 Origin 依据当次数据定界；
+# 循环 separated_bands 由领域计划计算独立 Y/Y2 显示范围并回读验收。
+# 2026-11-03: 数据曲线统一0.5pt，圆点保持5.8pt；所有文本常规体、刻度向外。
+# 本机 "0.8pt Line" 是历史原生模板名称，实际曲线0.5pt按配置写入并回读。
+# 轴框和刻度的 axis_line_width 与曲线线宽分别配置。
+# units.symbol_size 是 marker_size 的兼容别名，二者须一致。
+# export.format/dpi/origin_project 保留兼容；新字段已配置时优先。
+# marker_interval 仅作用于 Cycle Performance 的 symbol 显示。
+global:
+  font_family: Arial
+  background: white
+curves:
+  line_width: 0.5
+canvas:
+  width: 85
+  height: 63.75
+  size_unit: mm
+  aspect_ratio: '4:3'
+  margins:
+    left: 12
+    right: 4
+    bottom: 10
+    top: 4
+    unit: mm
+  margin_policy: increase_if_clipped_without_shrinking_fonts
+axes:
+  # These are translated by plotting_core.backend.axis into Origin Axis objects.
+  # null styling values are deliberately left to Origin/template defaults.
+  scale_type: linear
+  rescale_behavior: normal
+  axis_line_width: 1.0
+  tick_direction: out
+  tick_length: 3.0
+  tick_width: 1.0
+  minor_tick_length: null
+  minor_tick_width: null
+  major_tick: true
+  minor_tick: true
+  # User confirmed: one midpoint minor tick on continuous linear axes.
+  # Log and category axes have independent policies in AxisFormatter.
+  minor_tick_count: 1
+  show_top_axis: true
+  show_right_axis: true
+  show_bottom_ticks: true
+  show_left_ticks: true
+  show_top_ticks: false
+  show_right_ticks: false
+  show_bottom_tick_labels: true
+  show_left_tick_labels: true
+  show_top_tick_labels: false
+  show_right_tick_labels: false
+labels:
+  axis_title_font_size: 7
+  axis_title_bold: false
+  annotation_bold: false
+  tick_label_font_size: 6.5
+  axis_title_padding: 4
+  tick_label_decimal_places: null
+  tick_label_rotation_deg: 0
+  tick_label_offset_h: 0
+  tick_label_offset_v: 0
+  tick_label_bold: false
+colors:
+  sample_palette:
+  # 2026-10-08: main version retained; saturation reduced for softer Morandi.
+  - '#C9958F'
+  - '#AEA4C7'
+  - '#91B7D0'
+  - '#9BB6A3'
+  - '#C7AB7F'
+  - '#95B8B5'
+  - '#BE9AAA'
+  cycle_shading_rule:
+    mode: sequential
+    direction: dark_to_light
+    first_cycle: darkest
+    minimum_contrast: preserve_readability
+    darkest_color: sample_color
+    lightest_white_mix: 0.45
+    interpolation: linear
+    color_space: RGB
+legend:
+  font_size: 6.5
+  bold: false
+  position: auto
+  frame: false
+  naming_format:
+    mode: auto
+    primary_source: sample_column
+    fallback_source: filename_parsing
+    preserve_sample_core: true
+    strip_file_extension: true
+    strip_known_test_suffixes: true
+    no_inference_for_multiple_samples: true
+dual_y:
+  # Structural capability only.  No semantic labels or visual dimensions live here.
+  structure:
+    mode: single_layer_native_y2
+    single_layer: true
+    native_y2: true
+    independent_scale: true
+  left_y:
+    enabled: true
+    tick_labels: true
+    native_title: yl
+  right_y:
+    enabled: true
+    tick_labels: true
+    native_title: yr
+  axes_override:
+    show_left_axis: true
+    show_right_axis: true
+    show_left_ticks: true
+    show_right_ticks: true
+    show_left_tick_labels: true
+    show_right_tick_labels: true
+gcd:
+  # 本机 Origin 用户模板（User Files）里的历史线图模板，实际线宽显式写入0.5pt；
+  # 缺失时 pipeline 自动回落到内置 origin 模板并在 plot_spec.json 记录。
+  graph_template: 0.8pt Line.otpu
+  general:
+    line_width: 0.5
+    line_style: solid
+    symbol_shape: none
+    symbol_size: null
+    symbol_fill: null
+  # Cycle 渐变色条的几何（已确认值）：位置与高度按绘图区比例，标签间距按 mm。
+  # 优先顺序：本块 < plot spec 的 legend.bar 覆盖；代码内默认值仅在本块缺失时兜底。
+  legend:
+    bar:
+      x_from_frac: 0.10093
+      x_to_frac: 0.36719
+      top_frac: 0.94255
+      height_frac: 0.02212
+      label_gap_mm: 1.0
+  # 以下两个块是"每种图格式各自的坐标轴定义"，由 selection.x_representation
+  # 选择：specific_capacity -> capacity_voltage，na_content -> na_content_voltage。
+  capacity_voltage:            # 比容量–电压
+    x_axis_label: Specific capacity (mAh g⁻¹)
+    y_axis_label: Voltage (V vs. Na⁺/Na)
+    x_axis_range: null
+    y_axis_range: null
+  na_content_voltage:          # 钠含量–电压
+    x_axis_label: Na content, x
+    y_axis_label: Voltage (V vs. Na⁺/Na)
+    x_axis_range: null
+    y_axis_range: null
+cycle_performance:
+  graph_template: 0.8pt Line.otpu
+  capabilities:
+  - native_dual_y
+  # 循环图同样按"图格式"分别规定坐标轴：axis_sets 里一套格式一个块，
+  # 由 default_axis_set 或 plot spec 的 axis_set 选择；新增格式只加一个块，不改共用键。
+  default_axis_set: cycle_capacity
+  axis_sets:
+    # 比容量–循环圈数（默认格式）：左轴比容量、右轴库仑效率。
+    # 左轴数据固定取放电比容量，但标题不写 discharge；容量保持率图沿用同一标题，
+    # 保持率由该容量轨迹相对首圈读出。
+    cycle_capacity:
+      x_axis_label: Cycle number
+      left_y_axis_label: Specific capacity (mAh g⁻¹)
+      right_y_axis_label: Coulombic efficiency (%)
+  # 兼容旧字段路径（仅在没有任何可用 axis_sets 时读取）；新配置请写进 axis_sets。
+  x_axis_label: Cycle number
+  # 左轴数据固定绑定放电比容量（Discharge Specific Capacity），但标题不写 discharge，
+  # 与 GCD 的比容量轴统一为同一写法。
+  left_y_axis_label: Specific capacity (mAh g⁻¹)
+  right_y_axis_label: Coulombic efficiency (%)
+  x_axis_range: null
+  left_y_axis_range: null
+  right_y_axis_range: null
+  legend_naming_format: null
+  discharge_capacity: &capacity_style
+    symbol_shape: circle
+    symbol_size: 5.8
+    symbol_fill: filled
+    symbol_color: sample
+    line_width: 0.5
+    line_style: solid
+    line_color: sample
+    symbol_edge_width: 0.8
+  coulombic_efficiency:
+    symbol_shape: circle
+    symbol_size: 5.8
+    symbol_fill: open
+    symbol_color: sample
+    line_width: 0.5
+    line_style: solid
+    line_color: sample
+    symbol_edge_width: 0.8
+  axes_override:
+    axis_color: black
+    axis_title_color: black
+    tick_label_color: black
+  marker_interval: &cycle_markers
+    enabled: true
+    scope: cycle_performance_only
+    # Default: one native Origin marker for every validated source point.
+    # Sparse symbols require an explicit per-task mode: evenly_spaced.
+    mode: all
+    target_visible_points: null
+    strategy: evenly_spaced
+    apply_to: markers_only
+    keep_all_line_data: true
+  legend:
+    mode: grouped
+    sample_legend:
+      source: sample_name
+      encode: color
+    metric_legend:
+      entries:
+      - label: Discharge capacity
+        marker: filled_circle
+        line_style: solid
+      - label: Coulombic efficiency
+        marker: open_circle
+        line_style: solid
+rate_capability:
+  graph_template: 0.8pt Line.otpu
+  x_axis_label: Cycle number
+  y_axis_label: Specific capacity (mAh g⁻¹)
+  x_axis_range: null
+  y_axis_range: null
+  # Reuse the confirmed capacity style and cycle-level display policy.
+  discharge_capacity: *capacity_style
+  marker_interval:
+    <<: *cycle_markers
+    scope: cycle_level
+  legend:
+    mode: grouped
+  rate_labels:
+    # null font_size explicitly inherits labels.tick_label_font_size.
+    font_size: null
+    # Must be configured before rendering; 0=bottom, 1=top of the plot area.
+    y_position: null
+    # Optional downward displacement in mm; null means no extra displacement.
+    y_offset_mm: null
+export:
+  format: null
+  dpi: null
+  transparent_background: false
+  origin_project: null
+  primary_format: svg
+  secondary_format: png
+  raster_dpi: 600
+  background: white
+  preserve_vector: true
+  embed_fonts: true
+  save_editable_source: true
+units:
+  font_size: pt
+  line_width: pt
+  tick_length: pt
+  symbol_size: pt
+  canvas_size: mm
+  margin: mm
+  marker_size: pt
+  marker_edge_width: pt
+  axis_title_padding: pt
+axis_ticks:
+  # Origin Axis dialog: Major Ticks > Type = By Increment.
+  major_tick_type: by_increment
+  major_interval: auto
+  target_major_tick_count: 5
+  minor_ticks: true
+  log_minor_tick_count: null
+number_format:
+  decimal_places: auto
+  remove_trailing_zeros: true
+  scientific_notation: auto

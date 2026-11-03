@@ -1,0 +1,7 @@
+# Runtime dependencies. Excel reading itself uses the standard library.
+# Legacy versions reproduce the developer's historical Python 3.7 environment.
+PyYAML==6.0.1; python_version < "3.8"
+pywin32==223; sys_platform == "win32" and python_version < "3.8"
+# Modern interpreters: installation/offline checks do not certify Origin COM.
+PyYAML>=6.0.1,<7; python_version >= "3.8"
+pywin32>=306; sys_platform == "win32" and python_version >= "3.8"

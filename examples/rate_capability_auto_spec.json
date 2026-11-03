@@ -1,0 +1,26 @@
+{
+  "spec_version": 1,
+  "task_name": "rate_capability_example",
+  "plot_type": "rate_capability",
+  "output_root": "C:/battery-origin-demo/outputs",
+  "data": {
+    "kind": "excel_cycle_summary",
+    "file": "C:/battery-origin-demo/rate_input_example.xlsx",
+    "sheet": "RateInput"
+  },
+  "overrides": {
+    "plot_type": {
+      "rate_labels": {
+        "y_position": null,
+        "placement": "above"
+      }
+    }
+  },
+  "backend": {
+    "name": "origin"
+  },
+  "verification": {
+    "level": 3,
+    "reopen_project": true
+  }
+}
