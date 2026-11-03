@@ -4,7 +4,7 @@
 
 A reusable agent skill and Python pipeline for editable, native Origin figures from battery Excel data. Windows + a separately installed, licensed Origin application are required for rendering. Offline input validation does not start Origin.
 
-[下载 v1.0.0](https://github.com/shengf314/battery-origin-plotting/releases/tag/v1.0.0) · [完整技能说明](SKILL.md) · [输入规范](references/input-schema.md) · [支持边界](references/capability-status.md) · [MIT License](LICENSE)
+[下载 v1.0.1](https://github.com/shengf314/battery-origin-plotting/releases/tag/v1.0.1) · [完整技能说明](SKILL.md) · [输入规范](references/input-schema.md) · [支持边界](references/capability-status.md) · [MIT License](LICENSE)
 
 ## 支持什么
 

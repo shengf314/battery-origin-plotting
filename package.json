@@ -1,6 +1,6 @@
 {
   "name": "battery-origin-plotting",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Preview and PNG inspection dependencies for the Battery Origin Plotting skill",
   "license": "MIT",
