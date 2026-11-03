@@ -153,6 +153,39 @@ class PublisherTests(unittest.TestCase):
             self.assertEqual(archive.read("battery-origin-plotting/package.json"), files["package.json"])
         self.assertTrue((destination / "SHA256SUMS.txt").is_file())
 
+    def test_release_preview_has_no_network_commits_tags_or_baseline_changes(self):
+        repo = self.create_repo()
+        source = self.directory / "source"
+        (source / "plotting_core").mkdir(parents=True)
+        (source / "SKILL.md").write_bytes(self.minimal_files()["SKILL.md"])
+        example = source / "plotting_core" / "example.py"
+        example.write_bytes(b"value = 1\n")
+        source, files = publisher.source_snapshot(source)
+        commit = publisher.git(repo, "rev-parse", "HEAD").stdout
+        publisher.save_baseline(repo, source, files, commit.decode().strip())
+        baseline = publisher.state_file(repo).read_bytes()
+        example.write_bytes(b"value = 3\n")
+        notes = self.directory / "notes.md"
+        notes.write_text("Add reviewed local updates and an offline release preview.", encoding="utf-8")
+        original_validator, original_runner = publisher.validate_files, publisher.run
+
+        def local_only(args, *values, **options):
+            if args[0] == "gh" or (args[0] == "git" and args[1] in {"push", "fetch", "ls-remote"}):
+                raise AssertionError("Preview attempted network access")
+            return original_runner(args, *values, **options)
+
+        with patch.object(publisher, "validate_files", side_effect=lambda candidate: original_validator(candidate, tests=False)), patch.object(publisher, "run", side_effect=local_only):
+            report = publisher.preview_release(repo, source, "1.1.0", notes)
+        self.assertFalse(report["pushed"])
+        self.assertEqual(publisher.git(repo, "rev-parse", "HEAD").stdout, commit)
+        self.assertFalse(publisher.git(repo, "tag", "-l").stdout)
+        self.assertFalse(publisher.git(repo, "status", "--porcelain").stdout)
+        self.assertEqual(publisher.state_file(repo).read_bytes(), baseline)
+        self.assertEqual((repo / "plotting_core" / "example.py").read_bytes(), b"value = 1\n")
+        with ZipFile(report["archive"]) as bundle:
+            self.assertEqual(bundle.read("battery-origin-plotting/plotting_core/example.py"), b"value = 3\n")
+            self.assertEqual(json.loads(bundle.read("battery-origin-plotting/package.json"))["version"], "1.1.0")
+
 
 if __name__ == "__main__":
     unittest.main()

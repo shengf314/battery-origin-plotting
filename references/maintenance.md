@@ -17,6 +17,7 @@ $publisher = Join-Path $env:USERPROFILE '.codex\skills\battery-origin-plotting\s
 | 预览并检查 | `& $publisher -Action Check` | 列出拟同步文件，在临时副本中执行检查，不改变公开仓库及同步基线 |
 | 同步 | `& $publisher -Action Sync` | 合并、检查、提交并推送 main；不创建 Release |
 | 发版 | `& $publisher -Action Release -Version 1.1.1 -NotesFile $notesPath` | 先同步，再更新版本、提交、推送版本标签；由 GitHub 完成测试和发布 |
+| 发版预演 | `& $publisher -Action Release -Version 1.1.1 -NotesFile $notesPath -DryRun` | 本地合并和测试，输出候选 ZIP 与校验文件；不提交、不推送、不创建标签 |
 | 查看结果 | `& $publisher -Action Status` | 最近 Actions 和最新稳定版链接 |
 
 脚本使用当前可执行的 `python`、`git`、`gh`。Python 需安装公开仓库 requirements.txt 中的依赖，GitHub CLI 须已登录并有仓库写权限。需要指定解释器时加 `-Python <解释器绝对路径>`。桌面沙箱对 Git、凭证读取和仓库写入的授权以当前环境为准。
@@ -27,9 +28,12 @@ $publisher = Join-Path $env:USERPROFILE '.codex\skills\battery-origin-plotting\s
 python -X utf8 scripts/maintain.py sync --dry-run
 python -X utf8 scripts/maintain.py sync --push
 python -X utf8 scripts/maintain.py release --version 1.1.1 --notes-file $notesPath
+python -X utf8 scripts/maintain.py release --version 1.1.1 --notes-file $notesPath --dry-run
 ```
 
 版本号按 X.Y.Z 填写，不加 v。普通修复/文档调整递增 patch，新增兼容能力递增 minor，破坏输入契约的更改递增 major。每次必须高于当前 package.json 的版本；已存在的版本标签不能覆盖。
+
+发版预演的 ZIP 放在维护仓库的 dist/preview-v版本号-随机标识/ 下，只存在本机并由 Git 忽略。预演不推进同步基线；正式 Git archive 的元数据不同，最终发布包的 SHA256 以 Release 附件为准。
 
 ## 准备发布说明
 

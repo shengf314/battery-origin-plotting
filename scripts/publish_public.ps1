@@ -3,12 +3,14 @@ param(
     [string]$Action = 'Check',
     [string]$Version,
     [string]$NotesFile,
+    [switch]$DryRun,
     [string]$Python = 'python',
     [string]$SourceDir,
     [string]$ReleaseRepo = (Join-Path $env:USERPROFILE '.codex\skill-publishing\battery-origin-plotting')
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+if ($DryRun -and $Action -ne 'Release') { throw 'Use -Action Check to preview a sync. -DryRun applies to Release.' }
 
 if (-not $SourceDir) {
     $skillConfigRoot = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $env:USERPROFILE '.codex' }
@@ -36,6 +38,7 @@ try {
             'Sync' { $pythonArgs += @('sync', '--source', $SourceDir, '--push') }
             'Release' { $pythonArgs += @('release', '--source', $SourceDir, '--version', $Version, '--notes-file', $NotesFile) }
         }
+        if ($DryRun) { $pythonArgs += '--dry-run' }
         & $Python @pythonArgs
         if ($LASTEXITCODE -ne 0) { throw 'Maintenance stopped. Review the reported files; no force overwrite is performed.' }
     }

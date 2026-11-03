@@ -13,7 +13,9 @@ import re
 import subprocess
 import sys
 import tempfile
+import uuid
 from pathlib import Path
+from zipfile import ZipFile, ZIP_DEFLATED
 
 ROOT = Path(__file__).resolve().parents[1]
 NAME = "battery-origin-plotting"
@@ -358,6 +360,40 @@ def release(repo, source, version, notes_file):
           REPOSITORY + "/actions/workflows/release.yml")
 
 
+def preview_release(repo, source, version, notes_file, output=None):
+    """Build a prospective release locally; no Git mutations or network calls."""
+    assert_clean(repo)
+    state = state_file(repo)
+    if not state.is_file():
+        raise PublishingError("A reviewed source baseline is required")
+    document = json.loads(state.read_text(encoding="utf-8"))
+    source, incoming = source_snapshot(source)
+    if Path(document["source"]).resolve() != source:
+        raise PublishingError("Source differs from the private baseline")
+    previous = {name: base64.b64decode(value) for name, value in document["files"].items()}
+    before = tracked_files(repo)
+    after = version_files(plan_sync(before, previous, incoming), version,
+                          Path(notes_file).read_text(encoding="utf-8-sig"))
+    validate_files(after)
+    destination = Path(output).resolve() if output else (
+        Path(repo) / "dist" / ("preview-v" + version + "-" + uuid.uuid4().hex[:8]))
+    archive = destination / (NAME + "-v" + version + ".zip")
+    checksum_file = destination / "SHA256SUMS.txt"
+    if archive.exists() or checksum_file.exists():
+        raise PublishingError("Preview artifacts already exist; choose a fresh output directory")
+    destination.mkdir(parents=True, exist_ok=True)
+    with ZipFile(str(archive), "w", ZIP_DEFLATED) as bundle:
+        for name, data in sorted(after.items()):
+            bundle.writestr(NAME + "/" + name, data)
+    checksum = hashlib.sha256(archive.read_bytes()).hexdigest()
+    checksum_file.write_bytes((checksum + "  " + archive.name + "\n").encode("ascii"))
+    report = {"mode": "release_preview", "version": version, "pushed": False,
+              "archive": str(archive), "sha256": checksum,
+              "changed_files": [name for name in sorted(after) if after.get(name) != before.get(name)]}
+    print(json.dumps(report, ensure_ascii=False))
+    return report
+
+
 def build(repo, version, output):
     version_tuple(version)
     assert_clean_for_build = git(repo, "status", "--porcelain").stdout
@@ -396,6 +432,9 @@ def main(argv=None):
     release_parser.add_argument("--source", type=Path, default=source_default())
     release_parser.add_argument("--version", required=True)
     release_parser.add_argument("--notes-file", type=Path, required=True)
+    release_parser.add_argument("--dry-run", action="store_true",
+                                help="validate and build a local preview; no commit/tag/network")
+    release_parser.add_argument("--output-dir", type=Path)
     build_parser = sub.add_parser("build", help="build a clean, checked, versioned release archive")
     build_parser.add_argument("--version", required=True)
     build_parser.add_argument("--output-dir", type=Path, default=ROOT / "dist")
@@ -408,7 +447,10 @@ def main(argv=None):
         elif args.command == "sync":
             sync(ROOT, args.source, args.dry_run, args.push, args.message)
         elif args.command == "release":
-            release(ROOT, args.source, args.version, args.notes_file)
+            if args.dry_run:
+                preview_release(ROOT, args.source, args.version, args.notes_file, args.output_dir)
+            else:
+                release(ROOT, args.source, args.version, args.notes_file)
         elif args.command == "build":
             build(ROOT, args.version, args.output_dir)
         return 0
