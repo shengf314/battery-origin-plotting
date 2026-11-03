@@ -4,7 +4,7 @@
 
 A reusable agent skill and Python pipeline for editable, native Origin figures from battery Excel data. Windows + a separately installed, licensed Origin application are required for rendering. Offline input validation does not start Origin.
 
-[下载 v1.0.1](https://github.com/shengf314/battery-origin-plotting/releases/tag/v1.0.1) · [完整技能说明](SKILL.md) · [输入规范](references/input-schema.md) · [支持边界](references/capability-status.md) · [MIT License](LICENSE)
+[下载最新稳定版](https://github.com/shengf314/battery-origin-plotting/releases/latest) · [完整技能说明](SKILL.md) · [输入规范](references/input-schema.md) · [支持边界](references/capability-status.md) · [MIT License](LICENSE)
 
 ## 支持什么
 
@@ -111,6 +111,10 @@ Windows 与 Origin 环境就绪后，实际绘图：
 公开仓库 CI 只验证离线可移植性、输入预检与示例，不在 GitHub 托管 runner 上运行 Origin。历史实机能力与当前限制见 [能力状态](references/capability-status.md)。不同 Origin 版本、COM 接口、字体及显示设置仍需本机保存重开和图像验证。
 
 不支持 XRD sticks/独立参考层、ICP 误差棒桥接、GITT 参数反演或 EIS 拟合。对源表中的缺值、重复、无缓存公式或身份歧义会报告并暂停相关计算，不自动补值或更改数据。
+
+## 本地更新与新版本发布
+
+维护入口为 `scripts/publish_public.ps1`，提供 Check、Sync、Release、Status 四个操作。增量同步会保留公开版调整，在临时副本中检查后提交；推送新版本标签会由 GitHub 完成三版本测试、ZIP 打包、校验文件和 Release 发布。完整步骤、初始化与失败恢复见 [维护发布指南](references/maintenance.md)。
 
 ## 目录与许可
 

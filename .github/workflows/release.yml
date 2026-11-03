@@ -1,0 +1,43 @@
+name: Publish skill release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    uses: ./.github/workflows/check.yml
+    permissions:
+      contents: read
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -r requirements.txt
+      - name: Build versioned package and checksum
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python scripts/maintain.py build --version "${RELEASE_TAG#v}" --output-dir dist
+      - name: Publish checked release with both assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$RELEASE_TAG" dist/*.zip dist/SHA256SUMS.txt \
+            --verify-tag --title "$RELEASE_TAG - Battery Origin Plotting" \
+            --notes-file "releases/$RELEASE_TAG.md" --latest

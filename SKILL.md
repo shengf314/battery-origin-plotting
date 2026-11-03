@@ -51,3 +51,5 @@ python -X utf8 -m plotting_core.cli render --spec <绝对路径_plot_spec.json> 
 首次运行或接口失败时用 `python -X utf8 -m plotting_core.doctor`，见 [环境诊断](references/environment.md)。check 只检查输入和计划；按 [渲染流程](references/rendering-pipeline.md) 实际写入、导出、保存重开并回读绑定/逐点值/单位/角色/轴/图例。按 [完整验收](references/acceptance.md) 在工程副本执行 editability_probe 并实际查看图像；accepted 必须 input/data/native_structure/editability/image 五项通过。交付 OPJU、SVG、PNG、plot_spec.json、README.md、export_check.json。失败与 dry-run 不继承旧 accepted；合成测试不证明真实实验身份或方法。需要严格交付退出码时加 --require-accepted。
 
 公开版安装、依赖与无需 Origin 的合成预检见 [README](README.md)。科学参数必须由当前数据和用户声明确定，模板预设不能替代确认。
+
+维护者同步本地更新或发布新版本时，读取 [维护发布指南](references/maintenance.md)，使用增量同步与标签发布入口。
