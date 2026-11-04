@@ -1,17 +1,32 @@
 ---
 name: battery-origin-plotting
-description: Create editable native Origin figures from standardized Excel and explicit simple formulas, including Na capacity conversion, XRD normalization and ICP molar ratios. Excludes XPS, dQ/dV and workflows requiring differentiation, smoothing, fitting or model inversion.
+description: Create stable GCD and capacity/CE dual-Y Origin figures, and calibrated SEM crops with editable Illustrator AI. Other plot families, calculations and LAND/NEWARE imports are experimental. Excludes XPS, dQ/dV, smoothing, fitting and model inversion.
 ---
 
 # Battery Origin Plotting
 
-将中文需求整理成标准 Excel、明确科学语义及 PlotSpec，生成 Origin 原生可编辑图。范围为**直接绘制表中数值，或用已明确的简单公式计算后绘制**。XPS 和 dQ/dV 整个图族不属于本技能，已有分峰或导数结果也不路由进来；不将求导、平滑、分峰、拟合、模型反演列为待补参数或后续优化目标。
+## 当前支持状态
+
+截至 2026-11-04，维护者确认的**稳定支持仅包括 GCD、容量/库仑效率（CE）双 Y 图、SEM 单图裁剪与标尺/Illustrator AI 交付**。倍率、EIS、GITT、XRD、ICP、简单公式处理及蓝电/新威原始工程读取均处于测试阶段；代码存在、合成测试通过或个别历史案例通过不等于稳定支持。稳定标签也不代替每次任务的输入、原生文件和图像验收。
+
+
+将标准 Excel 整理为明确科学语义及 PlotSpec，生成 Origin 原生可编辑图；另有独立 SEM/Illustrator 分支。受选蓝电/新威工程读取属于测试阶段，先生成内部标准表再复用曲线后端。范围为**直接绘制表中数值，或用已明确的简单公式计算后绘制**。XPS 和 dQ/dV 整个图族不属于本技能，已有分峰或导数结果也不路由进来；不将求导、平滑、分峰、拟合、模型反演列为待补参数或后续优化目标。
 
 先区分 **A：已有数值绘图** 与 **B：简单公式处理**。区分 [公开版默认与当前声明](references/workflow-preferences.md)，当前科学信息不全时先完成读表与预检，再集中询问影响结果的缺口；复用当前用户已有的明确确认；作者历史偏好不构成新用户的科学声明。实际验证边界见 [能力状态](references/capability-status.md)。
 
+## SEM：稳定的独立 Illustrator 分支
+
+SEM TIFF/PNG/JPEG 单图任务读取 [SEM 契约](references/sem-illustrator.md) 和 [独立视觉预设](templates/sem_visual_profile.json)，使用 `python -X utf8 -m plotting_core.sem_cli check/render --spec <绝对路径>`。每图核实原标尺物理值、像素端点和有效图像边界；仅等比裁剪，按当次标定重算新标尺。默认最大居中矩形只表示几何选择，不证明形貌代表性。
+
+完整原图像素保留在原生剪切蒙版后，标尺是独立矢量，文字可编辑；真实 Illustrator 保存自包含、PDF 兼容 .ai，保存重开并回读对象及全部像素/不透明性。优先后台，不激活窗口或模拟点击，只关闭本次自有文档。Adobe 仍需在进程内处理文档；像素增强、修补、EDS、分割、粒径统计和批量组图不在此稳定分支内。
+
+## 蓝电/新威：测试阶段的工程预处理
+
+LAND .cex、NEWARE .nda/.ndax 先读 [工程输入契约](references/instrument-projects.md)。`instrument_cli inspect` 读取一致快照，`prepare` 根据明确样品/原生循环/分支生成内部 XLSX/PlotSpec，`--render` 才进入 Origin。解析器可读不等于稳定支持；下游 GCD/双 Y 的稳定状态不扩展为所有厂商格式稳定。保留完整记录、单位和来源 hash，不猜质量、倍率或循环身份，不控制测试设备。
+
 ## A：已有数值的原生绘图
 
-|plot_type|data.kind|按需读取|
+|plot_type（gcd / cycle_performance 稳定，其余测试阶段）|data.kind|按需读取|
 |---|---|---|
 |gcd：容量或已提供 Na/Δx–电压|excel_long|[原有输入](references/input-schema.md)、[GCD](references/families/gcd.md)|
 |cycle_performance：容量与 CE|excel_cycle_summary|原有输入、[循环/倍率](references/families/cycle-rate.md)、[CE 上置布局](references/native-cycle-layout.md)|
@@ -23,7 +38,7 @@ description: Create editable native Origin figures from standardized Excel and e
 
 registry 仅以上七族。A 保留原值和顺序；EIS 只画明确的实测阻抗及参考数据；不接拟合/背景/组分曲线。GITT 只画已给 D 或 log10 D，不从电压响应求 D，不识别脉冲或补选模型。A 不因图族名称自动计算；B 结果需桥接成以上既有输入方言。
 
-## B：明确的简单公式
+## B：明确的简单公式（测试阶段）
 
 |operation|处理内容|按需读取|
 |---|---|---|

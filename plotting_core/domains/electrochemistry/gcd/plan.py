@@ -10,11 +10,13 @@ from copy import deepcopy
 from typing import Dict, List, Optional
 
 from ....ingest.normalize import NormalizedData
+from ....ingest.report import ValidationReport
 from ....models import LabelSpec, LegendSpec, PlotSpec, RenderingPlan, SeriesSpec, LayerPlan
 from ....plot_types import base
 from ....style import colors as color_style
 from ....style import layout as layout_style
 from ....style import typography
+from ..cycle_summary import instrument_import_reference
 
 # Fallback geometry of the approved cycle-gradient bar, for a visual template that
 # does not configure the block yet.  The configured values live in
@@ -108,6 +110,11 @@ def qa_checks(plan: RenderingPlan, data: NormalizedData, config: Dict,
 
 
 def build_plan(spec: PlotSpec, config: Dict, data: NormalizedData) -> RenderingPlan:
+    import_report = ValidationReport()
+    instrument_import = instrument_import_reference(data.source.get("semantics") or {}, import_report)
+    import_report.raise_if_blocking("GCD instrument provenance")
+    if instrument_import is not None:
+        data.source["instrument_import"] = deepcopy(instrument_import)
     area = layout_style.plot_area(config)
     overrides = spec.axis_label_overrides()
     variant = data.source.get("x_representation")
@@ -133,6 +140,8 @@ def build_plan(spec: PlotSpec, config: Dict, data: NormalizedData) -> RenderingP
         metadata = {"source": data.source.get("file"), "sheet": data.source.get("sheet"),
                     "source_row_bounds": [item.first_row, item.last_row],
                     "cycle": item.cycle, "branch": item.branch, "sample": item.sample}
+        if instrument_import is not None:
+            metadata["instrument_import"] = deepcopy(instrument_import)
         if data.source.get("axis_binding") == "voltage_capacity":
             metadata.update(x=voltage_axis, y=capacity_axis)
         else:

@@ -24,8 +24,18 @@ if ($Action -eq 'Release') {
     $NotesFile = (Resolve-Path -LiteralPath $NotesFile).Path
 }
 $SourceDir = (Resolve-Path -LiteralPath $SourceDir).Path
+$publicationHttpsProxyBefore = $env:HTTPS_PROXY
+$publicationHttpProxyBefore = $env:HTTP_PROXY
 Push-Location -LiteralPath $ReleaseRepo
 try {
+    # gh does not inherit Git's HTTP proxy configuration automatically.
+    if (-not $env:HTTPS_PROXY) {
+        $publicationGitProxy = & git config --get-urlmatch http.proxy https://github.com
+        if ($LASTEXITCODE -eq 0 -and $publicationGitProxy) {
+            $env:HTTPS_PROXY = $publicationGitProxy
+            if (-not $env:HTTP_PROXY) { $env:HTTP_PROXY = $publicationGitProxy }
+        }
+    }
     if ($Action -eq 'Status') {
         & gh run list --repo shengf314/battery-origin-plotting --limit 5
         if ($LASTEXITCODE -ne 0) { throw 'Unable to read GitHub Actions.' }
@@ -43,5 +53,7 @@ try {
         if ($LASTEXITCODE -ne 0) { throw 'Maintenance stopped. Review the reported files; no force overwrite is performed.' }
     }
 } finally {
+    $env:HTTPS_PROXY = $publicationHttpsProxyBefore
+    $env:HTTP_PROXY = $publicationHttpProxyBefore
     Pop-Location
 }

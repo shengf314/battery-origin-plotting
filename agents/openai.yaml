@@ -1,4 +1,4 @@
 interface:
   display_name: "Battery Origin Plotting"
-  short_description: "Editable Origin plots from battery Excel data"
-  default_prompt: "Use $battery-origin-plotting to validate my Excel data and create editable native Origin figures."
+  short_description: "Stable GCD, capacity/CE dual-Y and SEM AI figures"
+  default_prompt: "Use $battery-origin-plotting for stable GCD, capacity/CE dual-Y or calibrated SEM figures; treat other functions as experimental."

@@ -1,5 +1,7 @@
 # 标准 Excel 输入契约
 
+本页仍是 A 绘图层的正式三族契约。用户提供受支持 LAND CEX／NEWARE NDA、NDAX 时，先走 [仪器工程预处理](instrument-projects.md) 自动生成本契约所需标准 XLSX/PlotSpec，用户不必手动导出。它不改变本页 `data.kind`，也不使 A reader 自行分析仪器原始记录。
+
 ## 通用校验顺序
 
 GCD 使用点级长表；Cycle Performance 与 Rate Capability 复用圈级 excel_cycle_summary 方言，不将不同粒度混入万能工作表。通用流程为 Sheet 检查 → 表头映射 → Sample / Cycle 校验 → 图族结构校验 → 意图筛选 → 实际所需数值及重复检查。所有操作只读，临时绘图数据另存。
@@ -132,7 +134,7 @@ GCD 检查不得为比较整行而读取非当前 Branch 列或其他无关数�
 
 ## Rate Capability schema：cycle-level summary
 
-`plot_type: rate_capability`，`data.kind: excel_cycle_summary`。只画放电比容量，不读取 CE、Charge Capacity，不从原始 GCD 提取数据。
+`plot_type: rate_capability`，`data.kind: excel_cycle_summary`。此 A reader 只画标准表的放电比容量，不读取 CE、Charge Capacity，不从原始 GCD 提取数据；受支持工程的原生数据整理由独立预处理完成。
 
 | 字段 | 要求 |
 | --- | --- |
@@ -156,7 +158,7 @@ Rate 错误报告列、源行号、原值及原因；经 InputContractError 走 
 
 ## 2026-10-08 科学逻辑兼容补充
 
-本页保留原有三图族契约；新系列方言见 [processed-input.md](processed-input.md)，不得将历史OPJU读取当成正式仪器格式支持。
+本页保留原有三图族契约；新系列方言见 [processed-input.md](processed-input.md)。历史 OPJU 检查不等于正式测量工程支持；仪器格式仅限 [已实现的工程预处理](instrument-projects.md) 及其版本边界。
 
 GCD可显式selection.axis_binding=voltage_capacity同时交换数据与物理量标题；默认capacity_voltage不变。data.semantics.x/y可声明scale(linear/log10)、direction(ascending/descending)、quantity、unit及科学label；声明必须匹配实际绑定，log10含非正值阻塞。Na显式语义需要na_content.source/reference；delta_na_content需明确Delta-x轴标题，不计算或变号。分支返回后重新出现会阻塞，旧入口不自动拆解通用Segment。
 

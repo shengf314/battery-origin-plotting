@@ -1,5 +1,7 @@
 # 倍率阶段与居中标签
 
+当前状态：**测试阶段**。保留入口供试用和回归，不计入当前稳定支持；见 [能力状态](capability-status.md)。
+
 本页对应 `rate_capability` / `excel_cycle_summary` 的科学规则。曲线按当前模板0.5pt，阶段标签与其他文字均常规体、可见刻度朝外；5.8pt全点符号、样品配色、字号和画布保持。以下规则只决定倍率阶段识别与阶段标签科学位置。一般输入要求见 [原有输入](input-schema.md)，科学角色与验证边界见 [循环与倍率](families/cycle-rate.md) 和 [能力状态](capability-status.md)。
 
 ## 可复制的输入表

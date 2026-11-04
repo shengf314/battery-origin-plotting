@@ -1,5 +1,7 @@
 # 提供的元素比与组成散点
 
+当前状态：**测试阶段**，不列为稳定支持。见 [能力状态](../capability-status.md)。
+
 下文只保留绘图契约与结构示例。私人历史工程未随公开包分发，不作为运行前提或本次科学确认。
 
 当前 `plot_type: icp`、`data.kind: excel_processed_series`，variant仅 `element_ratio` 或 `normalized_composition`。按已提供ratio/composition绘制元素分类散点；不画bar、不画浓度、不加error bars、不从浓度重算配比/化学式。严格字段/边界见 [processed-input.md](../processed-input.md)。

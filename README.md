@@ -1,32 +1,34 @@
 # Battery Origin Plotting
 
-把标准 Excel 数据绘制为 **Origin 原生、可编辑的电池科研图**，并保留数据来源、逐点回读和验收记录。既可作为 Codex skill 使用，也可直接调用 Python 命令行。
+当前稳定支持 **GCD、容量/库仑效率（CE）双 Y 图、SEM 单图裁剪与标尺/Illustrator AI 交付**。标准表曲线使用 Origin 原生可编辑对象；SEM 使用独立 Illustrator 流程。保留数据来源与验收记录，可作为 Codex skill 或 Python 命令行使用。
 
-A reusable agent skill and Python pipeline for editable, native Origin figures from battery Excel data. Windows + a separately installed, licensed Origin application are required for rendering. Offline input validation does not start Origin.
+Stable scope: GCD, capacity/CE dual-Y Origin plots, and calibrated single-panel SEM crops with editable Illustrator AI. Other plot families, formula processing and LAND/NEWARE imports are experimental. Windows and the corresponding licensed desktop application are required for rendering.
 
 [下载最新稳定版](https://github.com/shengf314/battery-origin-plotting/releases/latest) · [完整技能说明](SKILL.md) · [输入规范](references/input-schema.md) · [支持边界](references/capability-status.md) · [MIT License](LICENSE)
 
-## 支持什么
+## 支持状态（2026-11-04）
 
-| 图族 | 输入与功能 |
-| --- | --- |
-| GCD | 比容量–电压、已有 Na/Δx–电压、指定圈次与样品 |
-| 循环性能 | 已有放电比容量与 CE；原生双 Y 轴，可启用 CE 上置布局 |
-| 倍率性能 | 圈级容量与明确 C-rate；自动识别连续阶段，恢复倍率单独标注 |
-| EIS | 已有阻抗 XY；明确 Im/−Im 符号，保留原顺序 |
-| GITT | 已给 D 或 log10 D 结果；不从电压响应反演 D |
-| XRD | 已有谱与参考点；明确公式的逐谱归一化 |
-| ICP | 已有组成/比例；明确单位、溶液基准和分母的摩尔比例计算 |
+| 状态 | 功能 | 当前范围 |
+| --- | --- | --- |
+| **稳定** | **GCD** | 标准表中的比容量–电压、已有 Na/Δx 坐标、明确样品/圈次/分支 |
+| **稳定** | **容量/CE 双 Y** | 已有放电比容量与 CE；原生左右 Y，可启用 CE 上置、配对图例及两个轴归属箭头 |
+| **稳定** | **SEM 单图** | 原标尺逐图标定、等比裁剪、独立矢量标尺/活文字、真实可编辑 Illustrator AI |
+| 测试阶段 | 倍率、EIS、GITT、XRD、ICP | 保留已有入口供试用与回归，不作为稳定支持宣传 |
+| 测试阶段 | Na 换算、XRD 归一化、ICP 摩尔比例 | 参数、方法与科学参照须明确；GCD 的稳定标签不覆盖这些计算 |
+| 测试阶段 | LAND/NEWARE 原始工程 | 仅受选 CEX/NDA/NDAX 布局；读取/标准化成功不等于完整原生成图验收 |
+
+稳定范围以维护者当前确认的上述三项为准。代码存在、离线测试通过或历史个别样例通过，都不自动升级为稳定支持；每次科研交付仍须完成对应验收。
 
 简单公式处理仅包括 Na 容量等效换算、已扣背景 XRD 归一化、ICP 摩尔比例。XPS、dQ/dV、求导、平滑、拟合、分峰、背景拟合和模型反演不在本技能范围。
 
-每次完整任务交付 `.opju`、`.svg`、`.png`、`plot_spec.json`、`README.md`、`export_check.json`。曲线、轴、图例和标注均为 Origin 原生对象。所有输入只读，原始点序和数值保留。
+曲线任务交付 `.opju`、`.svg`、`.png`、`plot_spec.json`、`README.md`、`export_check.json`，对象均为 Origin 原生可编辑结构。SEM 交付真实自包含、PDF 兼容 `.ai` 及标定/几何/像素与原生回读记录。源数据只读；SEM 以原生蒙版保留完整源像素，不增强或修补形貌。
 
 ## 环境
 
 - **绘图**：Windows、已安装并授权的 Origin，且 `Origin.Application` COM 可用。开发机历史实测为 Origin 2024；其他版本须在自己的机器上验证。
 - **Python**：源码保持 3.7 兼容；开发机历史实测为 Python 3.7.1。公开版对现代 Python 提供依赖声明和离线 CI，离线通过不等同于完整 Origin 兼容性。
 - **Python 依赖**：PyYAML、Windows 上的 pywin32。Excel 读取使用标准库，无需安装 Excel 或 openpyxl。
+- **SEM**：Windows + 已安装、授权的 Illustrator，ArialMT 字体，以及含 Pillow/pypdf 的现代 Python 像素 worker；不需要 Origin。使用 `requirements-sem.txt` 安装可选依赖，必要时设置 `SEM_IMAGE_PYTHON`。
 - **预览与图片检查**：Node.js 20+、Sharp、Playwright、Microsoft Edge。预览使用 Playwright 的 `msedge` 通道；`npm install` 不会替你安装 Edge。
 
 Origin 软件、授权、私人参考工程、个人实验数据及历史审计文件不随仓库分发。附带的 Excel 为合成演示数据。
@@ -55,7 +57,7 @@ Set-Location -LiteralPath $skillDir
 技能文件安装后，还须在该目录安装下面的运行依赖。如果客户端没有出现新技能，重启客户端。日常调用示例：
 
 ```text
-使用 $battery-origin-plotting，先检查这份 Excel 的字段、单位和科学语义，再画原生可编辑的倍率图。保留全部点和恢复倍率阶段，输出到我指定的任务目录。
+使用 $battery-origin-plotting，先检查这份 Excel 的字段、单位和科学语义，再画原生可编辑的 GCD 或容量/CE 双 Y 图；SEM 则核实原标尺后生成可编辑 AI。输出到我指定的任务目录。
 ```
 
 ### 安装运行依赖
@@ -71,7 +73,9 @@ npm install
 
 直接使用脚本时继续调用上述虚拟环境中的 Python；让 agent 执行时也告知它该解释器路径。`doctor` 检查模块、Origin COM 注册、Node/Sharp/Playwright 的发现情况；它不启动 Origin，不能证明完整绘图能力。环境有缺口时先按 [环境说明](references/environment.md) 修复。
 
-## 五分钟跑通合成示例
+SEM 的像素 worker 请使用现代 Python（例如 3.11）。在该环境执行 `python -m pip install -r requirements-sem.txt`，再将 `SEM_IMAGE_PYTHON` 指向它的 python.exe；图头/几何和 Adobe 父流程可继续使用原来的解释器。Illustrator 与指定字体须另行安装，见 [SEM 契约](references/sem-illustrator.md)。
+
+## 五分钟跑通稳定 GCD 的合成示例
 
 从 skill 根目录执行。任务目录放在技能目录外；下面使用用户临时目录中的新文件夹，源文件不会被覆盖。
 
@@ -82,7 +86,9 @@ $specPath = Join-Path $demoDir 'plot_spec.json'
 .\.venv\Scripts\python.exe -X utf8 -m plotting_core.cli check --spec $specPath
 ```
 
-`check` 只读校验、构建绘图计划；无需启动 Origin。示例为两个合成样品、每样品 30 圈，共六个倍率阶段，最后一个 0.1 C 是独立恢复阶段。
+`check` 只读校验、构建绘图计划；无需启动 Origin。默认示例为一个合成样品的充/放电 GCD，共 6 点，不代表真实材料或实验。
+
+准备脚本还可用 `--plot-type cycle_performance` 生成容量/CE 双 Y 示例。原倍率合成示例保留，需显式传 `--plot-type rate_capability`，其状态为测试阶段。
 
 Windows 与 Origin 环境就绪后，实际绘图：
 
@@ -90,13 +96,14 @@ Windows 与 Origin 环境就绪后，实际绘图：
 .\.venv\Scripts\python.exe -X utf8 -m plotting_core.cli render --spec $specPath --qa-level 3
 ```
 
-成果位于 `$demoDir\outputs\rate_input_synthetic_example\`。实际打开 PNG/SVG 检查文字、图例、曲线与标注，再按 [完整验收](references/acceptance.md) 记录图像审阅。输入、逐点数据、原生结构、可编辑性和图像五项全部通过，才可称为 `accepted=true`；自动运行结束不自动等于完整验收。
+成果位于 `$demoDir\outputs\gcd_input_synthetic_example\`。实际打开 PNG/SVG 检查文字、图例、曲线与标注，再按 [完整验收](references/acceptance.md) 记录图像审阅。输入、逐点数据、原生结构、可编辑性和图像五项全部通过，才可称为 `accepted=true`；自动运行结束不自动等于完整验收。
 
 ## 使用自己的数据
 
 在副本中填入真实数据，按图族提供单位、样品、分支/圈次、来源和必要科学参照。spec 中的输入文件、spec 本身与输出根目录使用绝对路径。工作表选择、表头映射和单位规则见对应契约，不能把任意仪器导出表直接当作标准表。
 
 - GCD / 循环 / 倍率：[输入契约](references/input-schema.md)，[倍率模板](references/rate-capability.md)。
+- 稳定 SEM 单图：[SEM 契约](references/sem-illustrator.md)、[视觉预设](templates/sem_visual_profile.json)。用 `python -m plotting_core.sem_cli check/render --spec <绝对路径>`；标定和 ROI 均须按本图重新核实。
 - EIS / GITT / XRD / ICP：[已有 XY 结果输入](references/processed-input.md)，再读对应 [图族规则](references/families/)。
 - 明确的简单公式：[处理命令](references/processing-cli.md)、[Na 换算](references/na-conversion.md)、[XRD 处理](references/origin-processing.md)、[ICP 计算](references/icp-calculation.md)。
 
@@ -108,7 +115,7 @@ Windows 与 Origin 环境就绪后，实际绘图：
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-公开仓库 CI 只验证离线可移植性、输入预检与示例，不在 GitHub 托管 runner 上运行 Origin。历史实机能力与当前限制见 [能力状态](references/capability-status.md)。不同 Origin 版本、COM 接口、字体及显示设置仍需本机保存重开和图像验证。
+公开仓库 CI 只验证离线输入、几何、像素桥接和维护流程，不在 GitHub 托管 runner 上运行 Origin 或 Illustrator，也不改变上述稳定/测试划分。软件版本、COM、字体和显示设置仍需本机保存重开及图像验证，见 [能力状态](references/capability-status.md)。
 
 不支持 XRD sticks/独立参考层、ICP 误差棒桥接、GITT 参数反演或 EIS 拟合。对源表中的缺值、重复、无缓存公式或身份歧义会报告并暂停相关计算，不自动补值或更改数据。
 
@@ -120,4 +127,4 @@ Windows 与 Origin 环境就绪后，实际绘图：
 
 `SKILL.md` 是 agent 入口；`plotting_core/` 是执行引擎；`references/` 放契约和操作规则；`templates/` 放视觉预设；`scripts/` 放示例准备与预览工具；`examples/` 放合成工作簿和 spec 模板。
 
-本项目代码和文档使用 [MIT License](LICENSE)。Origin、第三方软件和依赖遵循各自许可。原子量数值表注明 [CIAAW 来源](https://www.ciaaw.org/abridged-atomic-weights.htm)；详细来源保留在表的元数据中。
+原创代码和文档使用 [MIT License](LICENSE)。NEWARE 字节布局/缩放的适配部分保留上游 BSD-3-Clause 许可，见 [第三方说明](THIRD_PARTY_NOTICES.md)。Origin、Illustrator、厂商组件和依赖遵循各自许可；厂商二进制不随包分发。原子量表注明 [CIAAW 来源](https://www.ciaaw.org/abridged-atomic-weights.htm)。

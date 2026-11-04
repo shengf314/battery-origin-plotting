@@ -1,5 +1,7 @@
 # XRD 简单公式的独立 Origin 处理
 
+当前状态：**测试阶段**。保留入口供试用和回归，不计入当前稳定支持；见 [能力状态](capability-status.md)。
+
 本入口只处理已扣背景 XRD 谱的明确归一化公式，不进行背景选择、扣背景、选峰、平滑、拟合、定相或模型反演。优先用 [独立 B 命令](processing-cli.md)，operation=xrd_normalization；A 的 render 不自动处理。Na 与 ICP 的简单公式分别见 [Na 换算](na-conversion.md) 与 [ICP 计算](icp-calculation.md)。
 
 ## 已确认流程与输入

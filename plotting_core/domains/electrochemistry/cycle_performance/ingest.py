@@ -1,5 +1,6 @@
 """Cycle Performance: shared cycle-summary input with two metrics per sample."""
 
+from copy import deepcopy
 from .. import cycle_summary
 
 METRICS = (("discharge_capacity", "Discharge Specific Capacity"),
@@ -23,4 +24,6 @@ def load(spec, workbook, report):
                            "y": ({"quantity": "coulombic_efficiency", "unit": "%" if unit == "percent" else "1"}
                                  if series.metric == "coulombic_efficiency" else
                                  {"quantity": "specific_capacity", "unit": "mAh g-1"})}
+        if "instrument_import" in data.source:
+            series.metadata["instrument_import"] = deepcopy(data.source["instrument_import"])
     return data

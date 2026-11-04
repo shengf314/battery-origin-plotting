@@ -1,5 +1,7 @@
 # XRD已提供谱与参考系列
 
+当前状态：**测试阶段**，不列为稳定支持。见 [能力状态](../capability-status.md)。
+
 下文只保留绘图契约与结构示例。私人历史工程未随公开包分发，不作为运行前提或本次科学确认。
 
 `plot_type: xrd`、`data.kind: excel_processed_series`、`semantics.variant: provided_spectrum`。只绘制已提供的2θ–intensity和参考点；不扣背景、归一化、纵移、换波长或定相。需要逐谱明确公式归一化时，先走独立 [XRD 处理](../origin-processing.md)，method 须由当前任务明确选择；此绘图入口不自动处理。公共表/来源/连接严格契约见 [processed-input.md](../processed-input.md)。

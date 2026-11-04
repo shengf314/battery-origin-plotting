@@ -1,5 +1,7 @@
 # 倍率性能的领域逻辑
 
+当前状态：**测试阶段**。保留入口供试用和回归，不计入当前稳定支持；见 [能力状态](capability-status.md)。
+
 入口为 `rate_capability` / `excel_cycle_summary`。本页描述可复用实现；科学规则及历史来源见 [循环与倍率](families/cycle-rate.md)，实际验证边界见 [能力状态](capability-status.md)。
 
 ## 数据与阶段

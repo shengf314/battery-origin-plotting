@@ -1,0 +1,49 @@
+{
+  "profile_version": 1,
+  "name": "reference_sem_white_regular",
+  "reference": {
+    "source": "Historical SEM style observation; private reference artwork is not distributed",
+    "observed_font": "Arial-BoldMT",
+    "applied_font": "ArialMT",
+    "weight_decision": "Use the public regular-weight preset; historical bold is an observation, not a scientific requirement.",
+    "observed_bar": "white horizontal butt-cap stroke, 4.272 pt thick; equivalent native filled rectangle used for editable SEM scale",
+    "historical_scale_label": "2 μm",
+    "historical_bar_width_pt": 22.709,
+    "calibration_rule": "Historical 2 μm / 22.709 pt is not a calibration for any future image; recompute physical bar width from each source and crop."
+  },
+  "panel": {
+    "width_pt": 163.578562,
+    "height_pt": 118.404042
+  },
+  "style": {
+    "bar_height_pt": 4.272,
+    "bar_left_pt": 8.459119,
+    "bar_bottom_pt": 6.848379,
+    "label_gap_pt": 2.8,
+    "scale_font": "ArialMT",
+    "scale_font_size_pt": 9.3923,
+    "panel_font": "ArialMT",
+    "panel_font_size_pt": 12,
+    "panel_left_pt": 9.460819,
+    "panel_top_pt": 8.9,
+    "bar_color_rgb": [
+      255,
+      255,
+      255
+    ],
+    "text_color_rgb": [
+      255,
+      255,
+      255
+    ],
+    "panel_label": ""
+  },
+  "placement_decisions": {
+    "historical_label_baseline_above_bar_center_pt": 6.7561,
+    "historical_label_left_offset_pt": 0.3889,
+    "label_gap_rule": "Use a native live-text bounding-box gap above the filled scale bar; 2.8pt is the adopted regular-font spacing, not a recovered exact historical baseline.",
+    "crop_default": "Maximum centered rectangle matching panel aspect inside an explicitly verified micrograph region; retain full source pixels behind native clipping.",
+    "scale_length": "Choose or honor an explicit physical length for each source; nice 1/2/5 × 10^k lengths near 10–25% of the calibrated field width are a planning option, not fixed 2 μm.",
+    "panel_label": "Fill only from the requested figure order; do not infer sample identity."
+  }
+}

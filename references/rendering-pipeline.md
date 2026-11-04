@@ -4,6 +4,8 @@
 
 `models.PlotSpec` → `registry` → `domains/<领域>/<图族>/{ingest,plan}.py` → `RenderingPlan` → `backend.origin` → `export.writer` → `qa`。
 
+若用户给受支持的蓝电／新威测量工程，先走 `instrument_cli` → `instruments.service` 的一致快照／隔离 reader → `instruments.standardize` → 既有标准 XLSX/PlotSpec；详细请求与科学阻塞见 [工程输入](instrument-projects.md)。标准化复用原有 reader/prepare，逐点验证后发布，再从上段 `models.PlotSpec` 进入原流程。通用后端不解析仪器格式，不增加 `data.kind`。仅 `prepare --render` 会在预处理通过后启动 Origin；`inspect` 和未加 render 的 prepare 不代表原生图已验证。
+
 registry 声明可读的数据方言；未注册图族或跨方言输入先拒绝。旧转发层保留兼容性。EIS、GITT、XRD、ICP 四种系列路由由独立领域模块接入，共用严格的 `domains/processed_xy` 契约。科学分组、方向、尺度、角色与来源由计划声明，通用后端不判断具体图族或执行科学处理。
 
 `style/`读取当前视觉模板。只在用户明确授权的范围使用参考工程的已读参数，不从截图推断线宽或把混合设置推广成统一样式；2026-11-03取舍见 [视觉配置](visual-application.md)。所有可见内容都是Origin原生曲线、轴、legend或文字。旧export目录中的overlay工具不参与正式native pipeline，不得作为失败兜底。

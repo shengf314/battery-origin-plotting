@@ -141,9 +141,19 @@ def build_plan(spec, config, data):
     for item in data.series:
         display = markers.marker_plan(item.points, config)
         color = sample_colors[item.sample]
+        # Keep legacy metadata untouched; imported tests need the same explicit
+        # units and manifest identity in their native Origin column comments.
+        metadata = {}
+        if "instrument_import" in data.source:
+            metadata = {"source": data.source.get("file"), "sheet": data.source.get("sheet"),
+                        "source_row_bounds": [item.first_row, item.last_row], "sample": item.sample,
+                        "x": {"quantity": "cycle_number", "unit": "1"},
+                        "y": {"quantity": "specific_capacity", "unit": "mAh g-1"},
+                        "instrument_import": deepcopy(data.source["instrument_import"])}
         series.append(SeriesSpec(
             series_id=item.series_id + "_line", sample=item.sample, metric=item.metric,
             points=display["line_points"], color=color, layer=0,
+            metadata=metadata,
             style=SeriesStyle(line_width_pt=style.line_width_pt,
                               line_style=style.line_style,
                               symbol_shape=style.symbol_shape,

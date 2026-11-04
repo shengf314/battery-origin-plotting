@@ -1,5 +1,7 @@
 # 已提供的EIS Nyquist
 
+当前状态：**测试阶段**，不列为稳定支持。见 [能力状态](../capability-status.md)。
+
 下文只保留绘图契约与结构示例。私人历史工程未随公开包分发，不作为运行前提或本次科学确认。
 
 `plot_type: eis`、`data.kind: excel_processed_series`、`semantics.variant: nyquist`。只画明确的实测阻抗与已有参考XY；不接 fit/background/component 系列，不计算阻抗、不拟合电路、不自动给Im取负。公共表与校验见 [processed-input.md](../processed-input.md)。

@@ -5,11 +5,40 @@ provenance stay in records alongside the normalised XY series; no workbook write
 """
 
 from collections import OrderedDict
+from copy import deepcopy
 import math
 from pathlib import Path
+import re
 
 from ...ingest.normalize import NormalizedData, NormalizedSeries
 from . import naming, schema
+
+
+def instrument_import_reference(semantics, report):
+    """Validate a declared sidecar identity without reading or executing it.
+
+    Legacy Excel inputs have no such declaration and retain their original
+    source/series metadata. The importer owns file creation and content checks.
+    """
+    if not isinstance(semantics, dict) or "instrument_import" not in semantics:
+        return None
+    reference = semantics["instrument_import"]
+    if not isinstance(reference, dict):
+        report.error("data.semantics.instrument_import must be an object")
+        return None
+    filename = reference.get("manifest_file")
+    digest = reference.get("sha256")
+    valid = True
+    if not isinstance(filename, str) or not filename.strip() or not Path(filename).is_absolute():
+        report.error("instrument_import.manifest_file must be an explicit absolute path")
+        valid = False
+    if not isinstance(digest, str) or re.fullmatch(r"[0-9a-fA-F]{64}", digest) is None:
+        report.error("instrument_import.sha256 must contain 64 hexadecimal characters")
+        valid = False
+    if reference.get("source_kind") != "instrument_project":
+        report.error("instrument_import.source_kind must be instrument_project")
+        valid = False
+    return deepcopy(reference) if valid else None
 
 
 def _requested_cycles(selection, report):
@@ -43,6 +72,7 @@ def load(spec, workbook, report, metrics, extra_parsers=None, sort_cycles=False)
     """Return (NormalizedData, records_by_sample) using one input contract."""
     extra_parsers = extra_parsers or {}
     source = spec.data
+    instrument_import = instrument_import_reference(source.semantics, report)
     sheet = source.sheet or "Sheet1"
     header_row = int(spec.selection.get("header_row", 1))
     header = workbook.header(sheet, header_row)
@@ -174,4 +204,8 @@ def load(spec, workbook, report, metrics, extra_parsers=None, sort_cycles=False)
                 "rows": rows_read, "samples": samples,
                 "cycles_per_sample": {sample: len(rows) for sample, rows in records.items()},
                 "series": len(series), "points": sum(len(item.points) for item in series)})
+    if instrument_import is not None:
+        data.source["instrument_import"] = deepcopy(instrument_import)
+        for item in data.series:
+            item.metadata["instrument_import"] = deepcopy(instrument_import)
     return data, records

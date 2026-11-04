@@ -1,5 +1,7 @@
 # GITT已提供的扩散系数或log10 D
 
+当前状态：**测试阶段**，不列为稳定支持。见 [能力状态](../capability-status.md)。
+
 下文只保留绘图契约与结构示例。私人历史工程未随公开包分发，不作为运行前提或本次科学确认。
 
 当前入口仅 `plot_type: gitt`、`data.kind: excel_processed_series`、`semantics.variant: supplied_diffusion`。用于已有D分析结果，不绘制time–voltage脉冲响应、不从电压响应计算D，不识别脉冲、不选择扩散模型或拟合参数。公共严格规范见 [processed-input.md](../processed-input.md)。

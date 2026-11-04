@@ -25,7 +25,7 @@ class PublicPackageTests(unittest.TestCase):
         shutil.rmtree(str(self.directory))
 
     def spec(self):
-        return PlotSpec.from_file(str(prepare_example(self.directory)))
+        return PlotSpec.from_file(str(prepare_example(self.directory, "rate_capability")))
 
     def test_synthetic_example_builds_six_stages_per_sample(self):
         spec = self.spec()
@@ -53,6 +53,23 @@ class PublicPackageTests(unittest.TestCase):
     def test_example_refuses_outputs_in_skill(self):
         with self.assertRaises(ValueError):
             prepare_example(SKILL_ROOT / "example-output")
+
+    def test_default_gcd_example_preserves_both_branches_and_all_points(self):
+        spec = PlotSpec.from_file(str(prepare_example(self.directory)))
+        _, data, _, plan = prepare(spec)
+        self.assertEqual(spec.plot_type, "gcd")
+        self.assertEqual({series.branch for series in data.series}, {"charge", "discharge"})
+        self.assertEqual(sum(len(series.points) for series in data.series), 6)
+        self.assertEqual(len(plan.data_series), 2)
+
+    def test_cycle_example_has_capacity_and_ce_on_native_dual_y_plan(self):
+        spec = PlotSpec.from_file(str(prepare_example(self.directory, "cycle_performance")))
+        _, data, _, plan = prepare(spec)
+        self.assertEqual({series.metric for series in data.series},
+                         {"discharge_capacity", "coulombic_efficiency"})
+        self.assertEqual(sum(len(series.points) for series in data.series), 10)
+        self.assertEqual({series.metric for series in plan.data_series},
+                         {"discharge_capacity", "coulombic_efficiency"})
 
     def test_local_node_packages_are_discovered(self):
         modules = self.directory / "node_modules"

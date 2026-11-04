@@ -2,7 +2,7 @@
 
 下文只保留绘图契约与结构示例。私人历史工程未随公开包分发，不作为运行前提或本次科学确认。
 
-入口均为 `data.kind: excel_cycle_summary`；循环图 `plot_type: cycle_performance`，倍率图 `plot_type: rate_capability`。采用圈级汇总，不从GCD轨迹提取容量或计算CE。公共字段见 [input-schema.md](../input-schema.md)，倍率阶段实现见 [rate-capability-implementation.md](../rate-capability-implementation.md)。
+入口均为 `data.kind: excel_cycle_summary`；循环图 `plot_type: cycle_performance`，倍率图 `plot_type: rate_capability`。此 A 层采用圈级汇总，不从 GCD 轨迹提取容量或计算 CE。用户给受支持蓝电／新威工程时，先由 [独立预处理](../instrument-projects.md) 校验原生循环／容量并记录必要的简单公式，生成本入口所需标准表。公共字段见 [input-schema.md](../input-schema.md)，倍率阶段实现见 [rate-capability-implementation.md](../rate-capability-implementation.md)。
 
 ## 字段、单位、X/Y与分组
 
@@ -27,7 +27,7 @@ Rate必须在表中明确给出，如 `0.1 C`、`2C`、`C/10`；无单位数字�
 
 ## Origin步骤、错误与QA
 
-1. 校验Sample/Cycle唯一、实际使用的数值、CE表示或逐圈Rate；一次列出缺字段、冲突样品/阶段、重复源行。使用现有标准入口，不从原始仪器记录补算。
+1. 校验Sample/Cycle唯一、实际使用的数值、CE表示或逐圈Rate；一次列出缺字段、冲突样品/阶段、重复源行。此 A 层使用现有标准入口；工程原生记录的读取与公式整理在独立预处理完成，不在渲染时补算。
 2. 写各科学系列独立X/Y列。Cycle容量绑定左Y、CE绑定原生右Y2并确认独立尺度；Rate一Y轴并保留stage标签。原生标题/legend表达量名、单位及sample/metric；视觉仍由原模板控制。
 3. 保存重开，读回所有XY源、逐点值/源行、原生轴与plot-to-side；Cycle确认fraction/percent标签正确且没有换算，Rate确认stage程序和恢复段未合并。核对科学点数时去除marker表现层计数差异，不能用plot-n替代有效点计数。实机状态由执行报告给出。
 

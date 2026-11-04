@@ -1,6 +1,8 @@
 # 已提供 XY 数据的输入契约
 
-本页是 `eis`、`gitt`、`xrd`、`icp` 的正式输入规范。XPS、dQ/dV 整族及 fit/background/component 角色不接入；不能通过更换图族名或 role 将拟合、分峰、求导结果作为普通数据路由。GITT 明确提供的 D/log10 D 结果是只读绘图例外，不在本技能计算。使用 `data.kind: excel_processed_series`；历史 OPJU、仪器原始文件和截图不因此成为正式绘图输入。原始数据分析与绘图分开：此入口只绘制已有数值，不求导、不拟合、不计算扩散系数、不分峰、不变号、不转换单位、不排序、不删除或补齐记录。
+当前状态：**测试阶段**。保留入口供试用和回归，不计入当前稳定支持；见 [能力状态](capability-status.md)。
+
+本页是 `eis`、`gitt`、`xrd`、`icp` 的正式输入规范。XPS、dQ/dV 整族及 fit/background/component 角色不接入；不能通过更换图族名或 role 将拟合、分峰、求导结果作为普通数据路由。GITT 明确提供的 D/log10 D 结果是只读绘图例外，不在本技能计算。使用 `data.kind: excel_processed_series`；历史 OPJU、这四族的仪器原始文件和截图不因此成为正式绘图输入。蓝电／新威的 GCD、循环、倍率工程另走 [独立预处理](instrument-projects.md)，不进入此系列方言。原始数据分析与绘图分开：此入口只绘制已有数值，不求导、不拟合、不计算扩散系数、不分峰、不变号、不转换单位、不排序、不删除或补齐记录。
 
 ## 标准工作表
 
